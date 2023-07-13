@@ -55,8 +55,20 @@ export const usePokemonStore = defineStore('pokemon', {
                      abilityDesc: abilityDesc,
                      name: data.name,
                      sprite: data.sprites.front_default,
-                     hp: data.stats[0].base_stat,
+                     spriteBack: data.sprites.back_default,
+                     stats: {
+                         hp: data.stats[0].base_stat,
+                         attack: data.stats[1].base_stat,
+                         defense: data.stats[2].base_stat,
+                         spAttack: data.stats[3].base_stat,
+                         spDefense: data.stats[4].base_stat,
+                         speed: data.stats[5].base_stat,
+                     },
                      types: data.types,
+                     height: data.height,
+                     weight: data.weight,
+                     speciesURL: data.species.url,
+                     locationsURL: data.location_area_encounters
                  }
                 await this.listOfPokemonByGeneration[generationNumber].push(formattedData)
             })

@@ -1,20 +1,27 @@
 <template>
-    <div class="grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-4 xl:gap-10 2xl:grid-cols-5" v-if="hasLoaded && listOfPokemon">
-        <pokemon-card v-for="pokemon in listOfPokemon" :key="pokemon" :pokemon="pokemon" />
+    <div>
+        <PokemonDetails :open="detailViewOpen" :pokemon="pokemonToView" @close="detailViewOpen = false" />
+        <div class="grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-4 xl:gap-10 2xl:grid-cols-5" v-if="hasLoaded && listOfPokemon">
+            <pokemon-card v-for="pokemon in listOfPokemon" :key="pokemon" :pokemon="pokemon" @click="openDetailView(pokemon)" />
+        </div>
     </div>
+
 </template>
 
 <script>
 import PokemonCard from "@/components/PokemonCard.vue";
 import {usePokemonStore} from "@/stores/pokemon"
 import {orderBy} from "lodash";
+import PokemonDetails from "@/components/PokemonDetails.vue";
 export default {
     name: 'FirstGenerationView',
-    components: {PokemonCard},
+    components: {PokemonDetails, PokemonCard},
     data() {
         return {
             listOfPokemon: [],
-            hasLoaded: false
+            hasLoaded: false,
+            detailViewOpen: false,
+            pokemonToView: {}
         }
     },
     async mounted() {
@@ -26,5 +33,11 @@ export default {
         this.listOfPokemon = orderBy(this.listOfPokemon, ['id'], ['asc'])
         this.hasLoaded = true
     },
+    methods: {
+        openDetailView(pokemon) {
+            this.pokemonToView = pokemon
+            this.detailViewOpen = true
+        }
+    }
 }
 </script>

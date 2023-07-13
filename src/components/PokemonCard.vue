@@ -40,7 +40,7 @@ const pokemonTypeBadgeColors = {
                     {{ props.pokemon.name }}
                 </p>
                 <div class="ml-4 text-gray-600 flex-shrink-0">
-                    HP {{ props.pokemon.hp }}
+                    HP {{ props.pokemon.stats.hp }}
                 </div>
             </div>
             <p class="text-gray-400">
