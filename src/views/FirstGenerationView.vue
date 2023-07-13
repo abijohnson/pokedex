@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-2 xl:gap-10 xl:grid-cols-4" v-if="hasLoaded && listOfPokemon">
+    <div class="grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-4 xl:gap-10 2xl:grid-cols-5" v-if="hasLoaded && listOfPokemon">
         <pokemon-card v-for="pokemon in listOfPokemon" :key="pokemon" :pokemon="pokemon" />
     </div>
 </template>
@@ -19,10 +19,10 @@ export default {
     },
     async mounted() {
         const pkmnStore = usePokemonStore()
-        if(pkmnStore.listOfPokemon.length === 0){
-            await pkmnStore.getFirstGenPkmn()
+        if(pkmnStore.listOfPokemonByGeneration[1].length === 0){
+            await pkmnStore.getPokemonByGeneration(1)
         }
-        this.listOfPokemon = pkmnStore.listOfPokemon
+        this.listOfPokemon = pkmnStore.listOfPokemonByGeneration[1]
         this.listOfPokemon = orderBy(this.listOfPokemon, ['id'], ['asc'])
         this.hasLoaded = true
     },

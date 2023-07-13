@@ -17,19 +17,18 @@
                                     </button>
                                 </div>
                             </TransitionChild>
-                            <!-- Sidebar component, swap this element with another sidebar if you like -->
                             <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
                                 <div class="flex h-16 shrink-0 items-center">
-                                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+                                    <img class="h-8 w-auto" src="../assets/masterball.png" alt="Masterball" />
                                 </div>
                                 <nav class="flex flex-1 flex-col">
                                     <ul role="list" class="flex flex-1 flex-col gap-y-7">
                                         <li>
                                             <ul role="list" class="-mx-2 space-y-1">
                                                 <li v-for="item in generations" :key="item.name">
-                                                    <a :href="item.href" :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                                                    <router-link :to="item.routerLink" :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
                                                         {{ item.name }}
-                                                    </a>
+                                                    </router-link>
                                                 </li>
                                             </ul>
                                         </li>
@@ -37,10 +36,10 @@
                                             <div class="text-xs font-semibold leading-6 text-gray-400">Other items</div>
                                             <ul role="list" class="-mx-2 mt-2 space-y-1">
                                                 <li v-for="team in items" :key="team.name">
-                                                    <a :href="team.href" :class="[team.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                                                    <router-link :to="team.routerLink" :class="[team.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
                                                         <component :is="team.icon" class="h-6 w-6 shrink-0" aria-hidden="true" />
                                                         <span class="truncate">{{ team.name }}</span>
-                                                    </a>
+                                                    </router-link>
                                                 </li>
                                             </ul>
                                         </li>
@@ -61,19 +60,18 @@
 
         <!-- Static sidebar for desktop -->
         <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-            <!-- Sidebar component, swap this element with another sidebar if you like -->
             <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
                 <div class="flex h-16 shrink-0 items-center">
-                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+                    <img class="h-8 w-auto" src="../assets/masterball.png" alt="Masterball" />
                 </div>
                 <nav class="flex flex-1 flex-col">
                     <ul role="list" class="flex flex-1 flex-col gap-y-7">
                         <li>
                             <ul role="list" class="-mx-2 space-y-1">
                                 <li v-for="item in generations" :key="item.name">
-                                    <a :href="item.href" :class="[isCurrentTab(item.name) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                                    <router-link :to="item.routerLink" :class="[isCurrentTab(item.name) ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
                                         {{ item.name }}
-                                    </a>
+                                    </router-link>
                                 </li>
                             </ul>
                         </li>
@@ -81,10 +79,10 @@
                             <div class="text-xs font-semibold leading-6 text-gray-400">Other items</div>
                             <ul role="list" class="-mx-2 mt-2 space-y-1">
                                 <li v-for="item in items" :key="item.name">
-                                    <a :href="item.href" :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                                    <router-link :to="item.routerLink" :class="[item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
                                         <component :is="item.icon" class="h-6 w-6 shrink-0" aria-hidden="true" />
                                         <span class="truncate">{{ item.name }}</span>
-                                    </a>
+                                    </router-link>
                                 </li>
                             </ul>
                         </li>
@@ -144,20 +142,20 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 import {useRoute} from "vue-router";
 const route = useRoute()
 const generations = [
-    { name: 'Generation I', href: '#' },
-    { name: 'Generation II', href: '#' },
-    { name: 'Generation III', href: '#'},
-    { name: 'Generation IV', href: '#'},
-    { name: 'Generation V', href: '#',},
-    { name: 'Generation VI', href: '#',},
-    { name: 'Generation VII', href: '#'},
-    { name: 'Generation VIII', href: '#'},
-    { name: 'Generation IX', href: '#'},
+    { name: 'Generation I', routerLink: 'first-gen' },
+    { name: 'Generation II', routerLink: 'second-gen' },
+    { name: 'Generation III', routerLink: 'third-gen'},
+    { name: 'Generation IV', routerLink: 'fourth-gen'},
+    { name: 'Generation V', routerLink: 'fifth-gen',},
+    { name: 'Generation VI', routerLink: 'sixth-gen',},
+    { name: 'Generation VII', routerLink: 'seventh-gen'},
+    { name: 'Generation VIII', routerLink: 'eighth-gen'},
+    { name: 'Generation IX', routerLink: 'ninth-gen'},
 ]
 const items = [
-    { id: 1, name: 'Berries', href: '#', icon: FolderIcon, current: false },
-    { id: 2, name: 'Items', href: '#', icon: FolderIcon, current: false },
-    { id: 3, name: 'TMs/HMs', href: '#', icon: FolderIcon,current: false },
+    { id: 1, name: 'Berries', routerLink: '#', icon: FolderIcon, current: false },
+    { id: 2, name: 'Items', routerLink: '#', icon: FolderIcon, current: false },
+    { id: 3, name: 'TMs/HMs', routerLink: '#', icon: FolderIcon,current: false },
 ]
 
 const isCurrentTab = (name) => {
