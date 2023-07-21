@@ -68,7 +68,9 @@ export const usePokemonStore = defineStore('pokemon', {
                      height: data.height,
                      weight: data.weight,
                      speciesURL: data.species.url,
-                     locationsURL: data.location_area_encounters
+                     locationsURL: data.location_area_encounters,
+                     locations: {},
+                     species: {}
                  }
                 await this.listOfPokemonByGeneration[generationNumber].push(formattedData)
             })
@@ -93,6 +95,22 @@ export const usePokemonStore = defineStore('pokemon', {
                     return 'No further description available for this ability.'
                 }
 
+            })
+        },
+        async getLocationsByPokemon(generation, pokemon){
+            const pokemonGen = this.listOfPokemonByGeneration[generation]
+            const pokemonEntry = pokemonGen.find(o => o.id === pokemon.id)
+            return await fetch(
+                pokemon.locationsURL
+            ).then((response) => {
+                return response.json()
+            }).then((data) => {
+                if(data.length === 0){
+                    console.log('emptee')
+                    pokemonEntry.locations = { notCatchable: 'This Pokemon cannot be obtained in the wild.' }
+                } else {
+                    pokemonEntry.locations = data
+                }
             })
         }
     },
