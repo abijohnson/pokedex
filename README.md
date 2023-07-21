@@ -4,5 +4,5 @@ This is a personal project I am currently working on. Using the Pokedex Api (doc
 
 ## Current Screenshot
 
-https://github.com/abijohnson/pokedex/assets/46466234/a6d2266c-e2e6-47dc-942f-24cdd3899029
+https://github.com/abijohnson/pokedex/assets/46466234/3534a905-1969-41e8-95b6-745b93e6f9e6
 
