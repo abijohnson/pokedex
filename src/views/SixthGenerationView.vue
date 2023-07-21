@@ -1,32 +1,56 @@
 <template>
-    <div class="grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-4 xl:gap-10 2xl:grid-cols-5"
-         v-if="hasLoaded && listOfPokemon">
-        <pokemon-card v-for="pokemon in listOfPokemon" :key="pokemon" :pokemon="pokemon"/>
+    <div>
+        <PokemonDetails
+            :open="detailViewOpen"
+            :pokemon="pokemonToView"
+            @close="detailViewOpen = false"
+            @getLocations="getLocationsByPokemon"
+        />
+        <div class="grid grid-cols-2 gap-5 md:grid-cols-3 xl:grid-cols-4 xl:gap-10 2xl:grid-cols-5" v-if="hasLoaded && listOfPokemon">
+            <pokemon-card v-for="pokemon in listOfPokemon" :key="pokemon" :pokemon="pokemon" @click="openDetailView(pokemon)" />
+        </div>
     </div>
+
 </template>
 
 <script>
 import PokemonCard from '@/components/PokemonCard.vue'
 import {usePokemonStore} from '@/stores/pokemon'
-import {orderBy} from "lodash"
-
+import {orderBy} from 'lodash'
+import PokemonDetails from '@/components/PokemonDetails.vue'
 export default {
     name: 'SixthGenerationView',
-    components: {PokemonCard},
+    components: {PokemonDetails, PokemonCard},
+    setup() {
+        const pkmnStore = usePokemonStore()
+        return {
+            pkmnStore
+        }
+    },
     data() {
         return {
             listOfPokemon: [],
-            hasLoaded: false
+            hasLoaded: false,
+            detailViewOpen: false,
+            pokemonToView: {}
         }
     },
     async mounted() {
-        const pkmnStore = usePokemonStore()
-        if (pkmnStore.listOfPokemonByGeneration[6].length === 0) {
-            await pkmnStore.getPokemonByGeneration(6)
+        if(this.pkmnStore.listOfPokemonByGeneration[6].length === 0){
+            await this.pkmnStore.getPokemonByGeneration(6)
         }
-        this.listOfPokemon = pkmnStore.listOfPokemonByGeneration[6]
+        this.listOfPokemon = this.pkmnStore.listOfPokemonByGeneration[6]
         this.listOfPokemon = orderBy(this.listOfPokemon, ['id'], ['asc'])
         this.hasLoaded = true
     },
+    methods: {
+        openDetailView(pokemon) {
+            this.pokemonToView = pokemon
+            this.detailViewOpen = true
+        },
+        async getLocationsByPokemon(pokemon) {
+            await this.pkmnStore.getLocationsByPokemon(6, pokemon)
+        }
+    }
 }
 </script>
